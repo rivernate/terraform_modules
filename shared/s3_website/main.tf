@@ -11,14 +11,17 @@ resource "aws_s3_bucket" "site_bucket" {
 
 data aws_iam_policy_document "bucket_policy" {
   version = "2012-10-17"
+
   statement {
-    sid = "AddPerm"
-    effect = "Allow"
+    sid     = "AddPerm"
+    effect  = "Allow"
     actions = ["s3:GetObject"]
+
     principals {
       identifiers = ["*"]
-      type = "AWS"
+      type        = "AWS"
     }
+
     resources = ["arn:aws:s3:::${var.domain_name}/*"]
   }
 }

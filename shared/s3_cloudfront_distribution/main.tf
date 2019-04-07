@@ -10,8 +10,9 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
 
     // Here we're using our S3 bucket's URL!
     domain_name = "${var.s3_website_endpoint}"
+
     // This can be any name to identify this origin.
-    origin_id   = "${var.domain_name}"
+    origin_id = "${var.domain_name}"
   }
 
   enabled             = true
@@ -23,14 +24,16 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
     compress               = true
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
+
     // This needs to match the `origin_id` above.
-    target_origin_id       = "${var.domain_name}"
-    min_ttl                = 0
-    default_ttl            = 86400
-    max_ttl                = 31536000
+    target_origin_id = "${var.domain_name}"
+    min_ttl          = 0
+    default_ttl      = 86400
+    max_ttl          = 31536000
 
     forwarded_values {
       query_string = false
+
       cookies {
         forward = "none"
       }
