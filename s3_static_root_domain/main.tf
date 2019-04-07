@@ -10,9 +10,9 @@ resource "aws_acm_certificate" "certificate" {
 resource "aws_route53_record" "validation" {
   count      = "${length(aws_acm_certificate.certificate.domain_validation_options)}"
   zone_id    = "${aws_route53_zone.zone.id}"
-  type       = "${lookup(aws_acm_certificate.certificate.domain_validation_options[count.index]), resource_record_type}"
-  name       = "${lookup(aws_acm_certificate.certificate.domain_validation_options[count.index]), resource_record_name}"
-  records    = ["${lookup(aws_acm_certificate.certificate.domain_validation_options[count.index]), resource_record_name}"]
+  type       = "${lookup(aws_acm_certificate.certificate.domain_validation_options[count.index], resource_record_type)}"
+  name       = "${lookup(aws_acm_certificate.certificate.domain_validation_options[count.index], resource_record_name)}"
+  records    = ["${lookup(aws_acm_certificate.certificate.domain_validation_options[count.index], resource_record_name)}"]
   ttl        = "300"
   depends_on = ["aws_acm_certificate.certificate"]
 }
