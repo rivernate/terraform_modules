@@ -4,7 +4,16 @@ resource "aws_route53_zone" "zone" {
 
 resource "aws_acm_certificate" "certificate" {
   domain_name       = "${var.root_domain_name}"
-  validation_method = "EMAIL"
+  validation_method = "DNS"
+}
+
+resource "aws_route53_record" "validation" {
+  count = "${length(aws_acm_certificate.certificate.domain_validation_options)}"
+  zone_id = "${aws_route53_zone.zone.id}"
+  type = "${aws_acm_certificate.certificate.domain_validation_options[count.index].resource_record_type}"
+  name = "${aws_acm_certificate.certificate.domain_validation_options[count.index].resource_record_name}"
+  records = ["${aws_acm_certificate.certificate.domain_validation_options[count.index].resource_record_name}"]
+  ttl = "300"
 }
 
 module s3_website {
