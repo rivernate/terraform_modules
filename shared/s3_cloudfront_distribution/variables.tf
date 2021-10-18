@@ -1,11 +1,11 @@
 variable "domain_name" {
-  type = "string"
+  type = string
 }
 
 variable "s3_website_endpoint" {
-  type = "string"
+  type = string
 }
 
 variable "acm_certificate_arn" {
-  type = "string"
+  type = string
 }

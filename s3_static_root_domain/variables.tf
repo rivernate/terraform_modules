@@ -1,3 +1,4 @@
 variable "root_domain_name" {
-  type = "string"
+  type        = string
+  description = "The root domain for the static site"
 }

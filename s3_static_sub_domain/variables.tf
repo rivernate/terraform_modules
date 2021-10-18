@@ -1,7 +1,7 @@
 variable "root_domain_name" {
-  type = "string"
+  type = string
 }
 
 variable "subdomain" {
-  type = "string"
+  type = string
 }

@@ -9,10 +9,10 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
     }
 
     // Here we're using our S3 bucket's URL!
-    domain_name = "${var.s3_website_endpoint}"
+    domain_name = var.s3_website_endpoint
 
     // This can be any name to identify this origin.
-    origin_id = "${var.domain_name}"
+    origin_id = var.domain_name
   }
 
   enabled             = true
@@ -26,7 +26,7 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
     cached_methods         = ["GET", "HEAD"]
 
     // This needs to match the `origin_id` above.
-    target_origin_id = "${var.domain_name}"
+    target_origin_id = var.domain_name
     min_ttl          = 0
     default_ttl      = 86400
     max_ttl          = 31536000
@@ -50,15 +50,15 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
 
   // Here's where our certificate is loaded in!
   viewer_certificate {
-    acm_certificate_arn = "${var.acm_certificate_arn}"
+    acm_certificate_arn = var.acm_certificate_arn
     ssl_support_method  = "sni-only"
   }
 }
 
 output "hosted_zone_id" {
-  value = "${aws_cloudfront_distribution.cloudfront_distribution.hosted_zone_id}"
+  value = aws_cloudfront_distribution.cloudfront_distribution.hosted_zone_id
 }
 
 output "domain_name" {
-  value = "${aws_cloudfront_distribution.cloudfront_distribution.domain_name}"
+  value = aws_cloudfront_distribution.cloudfront_distribution.domain_name
 }
